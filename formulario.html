@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Reservar Mesa - Bar Restaurante Kupula</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Epilogue:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #dc3545;
+    --red-dark: #b02a37;
+    --red-light: #fde8ea;
+    --dark: #1a1a1a;
+    --mid: #334155;
+    --soft: #64748b;
+    --line: #e2e8f0;
+    --bg: #fdf2f3;
+    --white: #ffffff;
+  }
+
+  html, body {
+    min-height: 100vh;
+    background: var(--bg);
+    font-family: 'Epilogue', sans-serif;
+    color: var(--dark);
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0 40px;
+  }
+
+  .header-band {
+    width: 100%;
+    background: linear-gradient(160deg, #1a1a1a 0%, #4a1015 60%, #dc3545 100%);
+    padding: 40px 24px 70px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dots-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  .header-content {
+    position: relative;
+    z-index: 2;
+    max-width: 480px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .logo-placeholder {
+    width: 70px; height: 70px;
+    border-radius: 16px;
+    background: white;
+    margin: 0 auto 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    animation: popIn 0.6s ease both;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  }
+
+  .name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 4px;
+    animation: fadeUp 0.5s ease 0.1s both;
+  }
+
+  .tagline {
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    animation: fadeUp 0.5s ease 0.2s both;
+  }
+
+  .form-card {
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.10);
+    width: calc(100% - 36px);
+    max-width: 440px;
+    margin: -40px auto 0;
+    position: relative;
+    z-index: 10;
+    padding: 26px 22px 20px;
+    animation: slideUp 0.6s ease 0.2s both;
+  }
+
+  .form-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 18px;
+    text-align: center;
+  }
+
+  .form-group {
+    margin-bottom: 14px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--soft);
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    font-family: 'Epilogue', sans-serif;
+    font-size: 14px;
+    color: var(--dark);
+    background: #fafbfc;
+    transition: all 0.2s;
+    -webkit-appearance: none;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(220,53,69,0.1);
+    background: white;
+  }
+
+  .form-group textarea { resize: vertical; min-height: 60px; }
+
+  .form-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+
+  .help-text {
+    font-size: 10px;
+    color: var(--soft);
+    margin-top: 3px;
+    font-style: italic;
+  }
+
+  .required { color: var(--red); }
+
+  .submit-btn {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 16px;
+    background: linear-gradient(135deg, #dc3545, #b02a37);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(220,53,69,0.3);
+  }
+
+  .submit-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(220,53,69,0.4); }
+  .submit-btn:active { transform: translateY(0); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .message {
+    display: none;
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  .message.success { display: block; background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+  .message.error { display: block; background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+  .footer {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--soft);
+    opacity: 0.7;
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.7); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header-band">
+  <div class="dots-pattern"></div>
+  <div class="header-content">
+    <div class="logo-placeholder">🍽️</div>
+    <div class="name">Bar Restaurante Kupula</div>
+    <div class="tagline">Reserva tu mesa en 30 segundos</div>
+  </div>
+</div>
+
+<div class="form-card">
+  <h3>🍽️ Reservar Mesa</h3>
+  <form id="reservaForm">
+    
+    <div class="form-group">
+      <label for="nombre"><span class="required">*</span> Nombre y Apellidos</label>
+      <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
+    </div>
+
+    <div class="form-group">
+      <label for="telefono"><span class="required">*</span> Teléfono de contacto</label>
+      <input type="tel" id="telefono" name="telefono" placeholder="Ej: 600 000 000" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email"><span class="required">*</span> Correo electrónico</label>
+      <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+      <div class="help-text">Si no tienes email, escribe: kupula2025@gmail.com y te confirmaremos por WhatsApp.</div>
+    </div>
+
+    <div class="form-group">
+      <label for="fecha"><span class="required">*</span> Día de la reserva</label>
+      <input type="date" id="fecha" name="fecha" required>
+    </div>
+
+    <div class="form-group">
+      <label for="hora"><span class="required">*</span> Hora de la reserva</label>
+      <select id="hora" name="hora" required>
+        <option value="">Selecciona una hora</option>
+        <option value="10:00 - 11:00">10:00 - 11:00</option>
+        <option value="11:00 - 12:00">11:00 - 12:00</option>
+        <option value="12:00 - 13:00">12:00 - 13:00</option>
+        <option value="13:00 - 14:00">13:00 - 14:00</option>
+        <option value="14:00 - 15:00">14:00 - 15:00</option>
+        <option value="18:00 - 19:00">18:00 - 19:00</option>
+        <option value="19:00 - 20:00">19:00 - 20:00</option>
+        <option value="20:00 - 21:00">20:00 - 21:00</option>
+        <option value="21:00 - 22:00">21:00 - 22:00</option>
+        <option value="22:00 - 23:00">22:00 - 23:00</option>
+        <option value="23:00 - 00:00">23:00 - 00:00</option>
+        <option value="00:00 - 01:00">00:00 - 01:00</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="comensales"><span class="required">*</span> Número de comensales</label>
+      <select id="comensales" name="comensales" required>
+        <option value="">Selecciona</option>
+        <option value="1 - 2">1 - 2</option>
+        <option value="2 - 4">2 - 4</option>
+        <option value="4 - 6">4 - 6</option>
+        <option value="6 - 8">6 - 8</option>
+        <option value="> 8">Más de 8</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="notas">¿Alguna nota o alergia? (opcional)</label>
+      <textarea id="notas" name="notas" placeholder="Ej: alergia al marisco, necesitamos trona..."></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn" id="submitBtn">
+      🍽️ &nbsp;Reservar Mesa
+    </button>
+
+    <div class="message" id="msgSuccess">
+      ✅ ¡Reserva enviada correctamente!<br>Recibirás un email de confirmación en breve.
+    </div>
+    <div class="message" id="msgError">
+      ❌ Ha ocurrido un error. Inténtalo de nuevo o llámanos al 946 751 869.
+    </div>
+  </form>
+</div>
+
+<div class="footer">Bar Restaurante Kupula · Zubiaga Kalea 3, Mungia</div>
+
+<script>
+// ⚠️ CAMBIAR: URL del script intermedio de Apps Script
+const SCRIPT_URL = "https://script.google.com/macros/s/TU_ID_AQUI/exec";
+
+document.getElementById('reservaForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  
+  const btn = document.getElementById('submitBtn');
+  const msgSuccess = document.getElementById('msgSuccess');
+  const msgError = document.getElementById('msgError');
+  
+  msgSuccess.style.display = 'none';
+  msgError.style.display = 'none';
+  
+  btn.disabled = true;
+  btn.textContent = '⏳ Enviando...';
+  
+  const datos = {
+    nombre: document.getElementById('nombre').value.trim(),
+    telefono: document.getElementById('telefono').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    fecha: document.getElementById('fecha').value,
+    hora: document.getElementById('hora').value,
+    comensales: document.getElementById('comensales').value,
+    notas: document.getElementById('notas').value.trim(),
+    timestamp: new Date().toISOString()
+  };
+  
+  try {
+    const response = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(datos)
+    });
+    
+    msgSuccess.style.display = 'block';
+    document.getElementById('reservaForm').reset();
+    
+  } catch (error) {
+    console.error('Error:', error);
+    msgError.style.display = 'block';
+  }
+  
+  btn.disabled = false;
+  btn.textContent = '🍽️ \u00A0Reservar Mesa';
+});
+</script>
+</body>
+</html>
