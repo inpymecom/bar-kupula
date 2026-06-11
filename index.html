@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Bar Restaurante Kupula - Mungia</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Epilogue:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #dc3545;
+    --red-dark: #b02a37;
+    --red-light: #fde8ea;
+    --dark: #1a1a1a;
+    --mid: #334155;
+    --soft: #64748b;
+    --line: #e2e8f0;
+    --bg: #fdf2f3;
+    --white: #ffffff;
+    --gold: #d4a017;
+  }
+
+  html, body {
+    min-height: 100vh;
+    background: var(--bg);
+    font-family: 'Epilogue', sans-serif;
+    color: var(--dark);
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0 50px;
+  }
+
+  /* HEADER */
+  .header-band {
+    width: 100%;
+    background: linear-gradient(160deg, #1a1a1a 0%, #4a1015 60%, #dc3545 100%);
+    padding: 40px 24px 70px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header-band::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(212,160,23,0.10);
+  }
+
+  .header-band::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -30px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .dots-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  .header-content {
+    position: relative;
+    z-index: 2;
+    max-width: 480px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .logo-placeholder {
+    width: 80px;
+    height: 80px;
+    border-radius: 18px;
+    background: white;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    animation: popIn 0.6s cubic-bezier(.34,1.56,.64,1) both;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    /* ⚠️ Reemplazar por: <img src="URL_LOGO" class="logo-img"> */
+  }
+
+  .name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 6px;
+    animation: fadeUp 0.5s ease 0.1s both;
+  }
+
+  .tagline {
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    font-weight: 400;
+    animation: fadeUp 0.5s ease 0.2s both;
+  }
+
+  /* CARD */
+  .main-card {
+    background: var(--white);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(15,23,42,0.12), 0 4px 16px rgba(15,23,42,0.06);
+    width: calc(100% - 36px);
+    max-width: 440px;
+    margin: -40px auto 0;
+    position: relative;
+    z-index: 10;
+    overflow: hidden;
+    animation: slideUp 0.6s ease 0.2s both;
+    padding: 8px 0;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 24px;
+    text-decoration: none;
+    color: var(--dark);
+    border-bottom: 1px solid var(--line);
+    transition: background 0.15s;
+  }
+
+  .contact-item:last-child { border-bottom: none; }
+  .contact-item:hover { background: #fdf2f3; }
+
+  .item-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .icon-phone  { background: #fde8ea; }
+  .icon-wa     { background: #dcfce7; }
+  .icon-email  { background: #fef9c3; }
+  .icon-reservas { background: #fde8ea; }
+  .icon-map    { background: #fce7f3; }
+
+  .item-info { flex: 1; min-width: 0; }
+
+  .item-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--soft);
+    margin-bottom: 2px;
+  }
+
+  .item-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark);
+  }
+
+  .item-arrow {
+    color: var(--line);
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  /* CTA */
+  .cta-btn {
+    display: block;
+    width: calc(100% - 36px);
+    max-width: 440px;
+    margin: 16px auto 0;
+    padding: 18px;
+    background: linear-gradient(135deg, #dc3545, #b02a37);
+    border: none;
+    border-radius: 14px;
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(220,53,69,0.35);
+    transition: opacity 0.2s, transform 0.15s;
+    animation: fadeUp 0.5s ease 0.35s both;
+  }
+
+  .cta-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+  .cta-btn:active { transform: translateY(0); }
+
+  /* SECCIONES */
+  .section {
+    width: calc(100% - 36px);
+    max-width: 440px;
+    margin: 16px auto 0;
+    background: var(--white);
+    border-radius: 20px;
+    padding: 20px 22px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+  }
+
+  .section h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 12px;
+  }
+
+  .horario-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 12px;
+    font-size: 13px;
+  }
+
+  .horario-dia {
+    font-weight: 600;
+    color: var(--mid);
+  }
+
+  .horario-hora {
+    color: var(--soft);
+  }
+
+  .promo-card {
+    background: #fdf2f3;
+    border-left: 3px solid var(--red);
+    padding: 12px 14px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+
+  .save-btn {
+    display: block;
+    width: calc(100% - 36px);
+    max-width: 440px;
+    margin: 10px auto 0;
+    padding: 12px;
+    background: var(--white);
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    color: var(--mid);
+    font-family: 'Epilogue', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .save-btn:hover { border-color: #dc3545; color: #dc3545; background: #fde8ea; }
+
+  .footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--soft);
+    opacity: 0.7;
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.7); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header-band">
+  <div class="dots-pattern"></div>
+  <div class="header-content">
+    <div class="logo-placeholder">🍽️</div>
+    <div class="name">Bar Restaurante Kupula</div>
+    <div class="tagline">Menú · Pintxos · Bebidas · Terraza</div>
+  </div>
+</div>
+
+<a class="cta-btn" href="formulario.html" target="_blank">
+  🍽️ &nbsp;Reservar Mesa
+</a>
+
+<div class="main-card" id="contactList"></div>
+
+<div class="section">
+  <h3>🕐 Horario</h3>
+  <div class="horario-grid">
+    <div class="horario-dia">Lunes</div><div class="horario-hora">Cerrado</div>
+    <div class="horario-dia">Martes</div><div class="horario-hora">10:00 - 15:00 · 18:00 - 23:00</div>
+    <div class="horario-dia">Miércoles</div><div class="horario-hora">10:00 - 15:00 · 18:00 - 23:00</div>
+    <div class="horario-dia">Jueves</div><div class="horario-hora">10:00 - 15:00 · 18:00 - 23:00</div>
+    <div class="horario-dia">Viernes</div><div class="horario-hora">10:00 - 15:00 · 19:00 - 01:00</div>
+    <div class="horario-dia">Sábado</div><div class="horario-hora">10:00 - 15:00 · 19:00 - 01:00</div>
+    <div class="horario-dia">Domingo</div><div class="horario-hora">10:00 - 15:00 · 19:00 - 23:00</div>
+  </div>
+</div>
+
+<div class="section" id="promoSection" style="display:none;">
+  <h3>🎉 Promociones</h3>
+  <div id="promoList"></div>
+</div>
+
+<a class="save-btn" id="saveVcard" href="#">
+  💾 &nbsp;Guardar Contacto
+</a>
+
+<div class="footer">Bar Restaurante Kupula · Zubiaga Kalea 3, Mungia</div>
+
+<script>
+const DATA = {
+  nombre: "Bar Restaurante Kupula",
+  telefono: "+34 946 751 869",
+  whatsapp: "34946751869",
+  email: "kupula2025@gmail.com",
+  reservas: "formulario.html",
+  direccion: "Zubiaga Kalea 3, 48100 Mungia, Bizkaia",
+  mapsQuery: "Bar+Restaurante+Kupula+Mungia",
+  whatsappMsg: "Hola Kupula, quiero reservar una mesa.",
+  promociones: []
+};
+
+function buildPage() {
+  const contacts = [
+    { icon: '📞', cls: 'icon-phone', label: 'Teléfono', value: DATA.telefono, href: `tel:${DATA.telefono.replace(/\s+/g,'')}` },
+    { icon: '💬', cls: 'icon-wa', label: 'WhatsApp', value: 'Reservar por WhatsApp', href: `https://wa.me/${DATA.whatsapp}?text=${encodeURIComponent(DATA.whatsappMsg)}` },
+    { icon: '✉️', cls: 'icon-email', label: 'Email', value: DATA.email, href: `mailto:${DATA.email}` },
+    { icon: '🍽️', cls: 'icon-reservas', label: 'Reservas', value: 'Formulario de reserva', href: DATA.reservas },
+    { icon: '📍', cls: 'icon-map', label: 'Dirección', value: 'Zubiaga Kalea 3, Mungia', href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(DATA.mapsQuery)}` }
+  ];
+
+  const list = document.getElementById('contactList');
+  contacts.forEach((c, i) => {
+    const a = document.createElement('a');
+    a.href = c.href;
+    a.target = '_blank';
+    a.className = 'contact-item';
+    a.style.animationDelay = `${0.1 + i * 0.07}s`;
+    a.innerHTML = `<div class="item-icon ${c.cls}">${c.icon}</div><div class="item-info"><div class="item-label">${c.label}</div><div class="item-value">${c.value}</div></div><div class="item-arrow">›</div>`;
+    list.appendChild(a);
+  });
+
+  if (DATA.promociones.length > 0) {
+    document.getElementById('promoSection').style.display = 'block';
+    const promoList = document.getElementById('promoList');
+    DATA.promociones.forEach(p => {
+      const div = document.createElement('div');
+      div.className = 'promo-card';
+      div.textContent = p;
+      promoList.appendChild(div);
+    });
+  }
+
+  const vcard = [
+    'BEGIN:VCARD','VERSION:3.0',
+    `FN:${DATA.nombre}`,
+    `TEL:${DATA.telefono}`,
+    `EMAIL:${DATA.email}`,
+    `ADR;TYPE=WORK:;;${DATA.direccion};;;;`,
+    'END:VCARD'
+  ].join('\r\n');
+  
+  const blob = new Blob([vcard], {type: 'text/vcard'});
+  document.getElementById('saveVcard').href = URL.createObjectURL(blob);
+  document.getElementById('saveVcard').download = 'Kupula-Mungia.vcf';
+}
+
+buildPage();
+</script>
+</body>
+</html>
