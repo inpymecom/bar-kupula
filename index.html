@@ -346,7 +346,7 @@ const DATA = {
 function buildPage() {
   const contacts = [
     { icon: '📞', cls: 'icon-phone', label: 'Teléfono', value: DATA.telefono, href: `tel:${DATA.telefono.replace(/\s+/g,'')}` },
-    { icon: '💬', cls: 'icon-wa', label: 'WhatsApp', value: 'Reservar por WhatsApp', href: `https://wa.me/${DATA.whatsapp}?text=${encodeURIComponent(DATA.whatsappMsg)}` },
+    { icon: '💬', cls: 'icon-wa', label: 'WhatsApp', value: 'Escríbenos al WhatsApp', href: `https://wa.me/${DATA.whatsapp}?text=${encodeURIComponent(DATA.whatsappMsg)}` },
     { icon: '✉️', cls: 'icon-email', label: 'Email', value: DATA.email, href: `mailto:${DATA.email}` },
     { icon: '🍽️', cls: 'icon-reservas', label: 'Reservas', value: 'Formulario de reserva', href: DATA.reservas },
     { icon: '📍', cls: 'icon-map', label: 'Dirección', value: 'Zubiaga Kalea 3, Mungia', href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(DATA.mapsQuery)}` }
