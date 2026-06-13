@@ -198,7 +198,95 @@
 
   .message.success { display: block; background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
   .message.error { display: block; background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    /* CHECKBOX PROTECCIÓN DE DATOS */
+  .privacy-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 6px 0 10px;
+    font-size: 12px;
+    color: var(--mid);
+  }
 
+  .privacy-check input[type="checkbox"] {
+    width: auto;
+    margin-top: 2px;
+    accent-color: var(--red);
+  }
+
+  .privacy-link {
+    display: block;
+    font-size: 11px;
+    color: var(--red);
+    text-decoration: underline;
+    cursor: pointer;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+
+  .privacy-link:hover {
+    color: var(--red-dark);
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-overlay.active {
+    display: flex;
+  }
+
+  .modal-box {
+    background: white;
+    border-radius: 16px;
+    padding: 24px 20px;
+    max-width: 440px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    animation: fadeUp 0.3s ease;
+  }
+
+  .modal-box h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    color: var(--red);
+    margin-bottom: 14px;
+    text-align: center;
+  }
+
+  .modal-box p {
+    font-size: 12px;
+    color: var(--mid);
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+
+  .modal-close {
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+    padding: 10px;
+    background: var(--dark);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+   
+  }
   .footer {
     margin-top: 16px;
     text-align: center;
@@ -293,7 +381,13 @@
       <label for="notas">¿Alguna nota o alergia? (opcional)</label>
       <textarea id="notas" name="notas" placeholder="Ej: alergia al marisco..."></textarea>
     </div>
-
+        <!-- PROTECCIÓN DE DATOS -->
+    <label class="privacy-check">
+      <input type="checkbox" id="privacyCheck" required>
+      <span>He leído y acepto la <strong>política de protección de datos</strong></span>
+    </label>
+    <span class="privacy-link" id="privacyLink">Ver política de protección de datos</span>
+   
     <button type="submit" class="submit-btn" id="submitBtn">
       🍽️ &nbsp;Reservar Mesa
     </button>
@@ -307,12 +401,44 @@
   </form>
 </div>
 
+ <!-- MODAL PROTECCIÓN DE DATOS -->
+<div class="modal-overlay" id="privacyModal">
+  <div class="modal-box">
+    <h4>🔒 Protección de Datos</h4>
+    <p>Los datos facilitados serán utilizados <strong>exclusivamente</strong> para la organización de las reservas del Bar Restaurante Kupula.</p>
+    <p>No serán cedidos, vendidos ni facilitados a <strong>terceros ajenos</strong> al bar, ni utilizados para fines comerciales.</p>
+    <p>Los datos sólo se utilizarán para fines estadísticos, con datos <strong>anónimos</strong>.</p>
+    <p>Las personas interesadas podrán solicitar en cualquier momento la <strong>modificación, actualización o supresión</strong> de sus datos personales contactando con el bar.</p>
+    <p style="font-size:11px;color:var(--soft);margin-top:12px;">Bar Restaurante Kupula · Zubiaga Kalea 3, Mungia · kupula2025@gmail.com</p>
+    <button class="modal-close" id="modalClose">Entendido</button>
+  </div>
+</div>
+ 
 <div class="footer">Bar Restaurante Kupula · Zubiaga Kalea 3, Mungia</div>
 
 <script>
 // ⚠️ CAMBIAR: URL del script intermedio de Apps Script
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx_laZq-0s9Kh19NeyZgsCZBJf3wAGYLjIupyoL0QFd8RIuF0eJ1fFh3zIDviEWuNxlxw/exec";
 
+ // Modal de protección de datos
+const privacyLink = document.getElementById('privacyLink');
+const privacyModal = document.getElementById('privacyModal');
+const modalClose = document.getElementById('modalClose');
+
+privacyLink.addEventListener('click', function() {
+  privacyModal.classList.add('active');
+});
+
+modalClose.addEventListener('click', function() {
+  privacyModal.classList.remove('active');
+});
+
+privacyModal.addEventListener('click', function(e) {
+  if (e.target === privacyModal) {
+    privacyModal.classList.remove('active');
+  }
+});
+ 
 document.getElementById('reservaForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   
